@@ -27,6 +27,6 @@ RUN chmod -R 775 storage bootstrap/cache
 # EXPOSE $PORT
 
 # Start Laravel server
-CMD php -r "\$port = getenv('PORT') ?: 8000; passthru('php artisan serve --host=0.0.0.0 --port='.\$port);"
-# CMD php artisan serve --host=0.0.0.0 --port=8000
+# CMD php -r "\$port = getenv('PORT') ?: 8000; passthru('php artisan serve --host=0.0.0.0 --port='.\$port);"
+CMD php artisan serve --host=0.0.0.0 --port=8000
 
