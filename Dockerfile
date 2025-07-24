@@ -11,6 +11,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working dir
 WORKDIR /var/www/html
 
+RUN php artisan key:generate
+
 # Copy source code
 COPY . .
 
