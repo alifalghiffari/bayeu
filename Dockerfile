@@ -11,8 +11,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working dir
 WORKDIR /var/www/html
 
-RUN php artisan key:generate
-
 # Copy source code
 COPY . .
 
@@ -27,6 +25,7 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 # RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
+RUN php artisan key:generate
 
 # Expose port for Laravel's built-in server
 # EXPOSE $PORT
