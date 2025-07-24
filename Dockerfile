@@ -25,8 +25,6 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 # RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-RUN php artisan key:generate
-
 # Expose port for Laravel's built-in server
 # EXPOSE $PORT
 
