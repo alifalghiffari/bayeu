@@ -9,26 +9,20 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working dir
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Copy source code
 COPY . .
 
-EXPOSE 8000
-
 # Install Laravel deps
-RUN composer install --no-dev --optimize-autoloader \
-    && php artisan config:cache
+RUN composer install --no-dev --optimize-autoloader
 
 # Set permission for storage and bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
-RUN chown -R www-data:www-data storage bootstrap/cache
-# RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache
 
-# Expose port for Laravel's built-in server
-# EXPOSE $PORT
+EXPOSE 8000
 
-# Start Laravel server
-# CMD php -r "\$port = getenv('PORT') ?: 8000; passthru('php artisan serve --host=0.0.0.0 --port='.\$port);"
-CMD php artisan serve --host=0.0.0.0 --port=8000
-
+# Laravel akan otomatis baca environment variables dari Railway
+CMD php artisan config:cache && \
+    php artisan serve --host=0.0.0.0 --port=8000
